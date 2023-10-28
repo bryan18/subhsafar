@@ -19,8 +19,8 @@ import { TokensModule } from './tokens/tokens.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb+srv://testdb:IcjEaUwWb7rzSXVD@cluster0.my5x4.mongodb.net/subhsafar?retryWrites=true&w=majority'),
     ConfigModule.forRoot(),
+    MongooseModule.forRoot(`mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASS}@${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`),
     UsersModule,
     IamModule,
     TokensModule,
@@ -34,4 +34,5 @@ import { TokensModule } from './tokens/tokens.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+}
