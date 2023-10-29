@@ -25,6 +25,7 @@ import { TokensModule } from './tokens/tokens.module';
         MONGO_DB_USER: Joi.required(),
         MONGO_DB_PASS: Joi.required(),
         MONGO_DB_NAME: Joi.required(),
+        PORT: Joi.number().default(3000),
         JWT_SECRET: Joi.required(),
         JWT_TOKEN_AUDIENCE: Joi.required(),
         JWT_TOKEN_ISSUER: Joi.required(),
