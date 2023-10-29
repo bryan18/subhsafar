@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { ConfigModule } from '@nestjs/config';
+import * as Joi from '@hapi/joi';
 
 
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
@@ -19,7 +20,18 @@ import { TokensModule } from './tokens/tokens.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        MONGO_DB_USER: Joi.required(),
+        MONGO_DB_PASS: Joi.required(),
+        MONGO_DB_NAME: Joi.required(),
+        JWT_SECRET: Joi.required(),
+        JWT_TOKEN_AUDIENCE: Joi.required(),
+        JWT_TOKEN_ISSUER: Joi.required(),
+        JWT_ACCESS_TOKEN_TTL: Joi.required(),
+        JWT_REFRESH_TOKEN_TTL: Joi.required(),
+      }),
+    }),
     MongooseModule.forRoot(`mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASS}@${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`),
     UsersModule,
     IamModule,
