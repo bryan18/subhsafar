@@ -17,6 +17,12 @@ export class User extends Document {
         default: Role.Regular
     })
     roles:Role[];
+
+    @Prop()
+    createdAt?: number;
+
+    @Prop()
+    updatedAt?: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -21,6 +21,9 @@ export class UsersService {
   async create(createUserDto: CreateUserDto) {
     try {
       const user = new this.userModel( createUserDto );
+      const date = new Date().getTime();
+      user.createdAt = date;
+      user.updatedAt = date;      
       return user.save();
     } catch (error) {
       this.handleExceptions(error);
@@ -54,7 +57,9 @@ export class UsersService {
     return user;
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const date = new Date().getTime();
+    updateUserDto.updatedAt = date;
     const existingUser = await this.userModel
       .findOneAndUpdate(
         { _id: id },
@@ -69,10 +74,12 @@ export class UsersService {
     return existingUser;
   }
 
-  async remove(id: number) {
-    // const user = await this.findOne(id);
-    // return user.remove();
-  }
+  // async remove(id: string) {
+  //   const user = await this.findOne(id);
+  //   return user.remove({
+  //     id: id
+  //   });
+  // }
 
   private handleExceptions( error: any ) {
     if (error.code === 11000) {
