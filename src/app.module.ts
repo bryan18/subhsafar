@@ -22,9 +22,7 @@ import { TokensModule } from './tokens/tokens.module';
   imports: [
     ConfigModule.forRoot({
       validationSchema: Joi.object({
-        MONGO_DB_USER: Joi.required(),
-        MONGO_DB_PASS: Joi.required(),
-        MONGO_DB_NAME: Joi.required(),
+        DATABASE_URL: Joi.required(),
         PORT: Joi.number().default(3000),
         JWT_SECRET: Joi.required(),
         JWT_TOKEN_AUDIENCE: Joi.required(),
@@ -33,7 +31,7 @@ import { TokensModule } from './tokens/tokens.module';
         JWT_REFRESH_TOKEN_TTL: Joi.required(),
       }),
     }),
-    MongooseModule.forRoot(`mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASS}@${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`),
+    MongooseModule.forRoot(`${process.env.DATABASE_URL}?retryWrites=true&w=majority`),
     UsersModule,
     IamModule,
     TokensModule,
